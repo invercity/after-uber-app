@@ -20,11 +20,13 @@ To configure app, please edit the `config.json` file
 **NOTE** Make sure, that you application setup for authorization redirect URL: http://localhost:3000/api/callback (or port that you selected)
 
 `google` - Google Maps API key (used for geolocation)
+
 `discount` - Uber Discount (20% by default)
+
 `app.port` - Port, where application will be launched
 
 ## Run
 
-To run application, just fire
+To run application, just execute
 
 `npm start`
