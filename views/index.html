@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Uber App</title>
+    <script type="text/javascript" src="/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var clearResults = function() {
+                $('#results').html('');
+                $('#panel').removeClass('panel-danger');
+                $('#panel').removeClass('panel-success');
+                $('#status').html('');
+            };
+
+            $('#startPoint').keyup(clearResults);
+            $('#endPoint').keyup(clearResults);
+
+            $('#calculate').click(function () {
+                if ($('#startPoint').val() && $('#endPoint').val()) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/api/uber',
+                        data: {
+                            start: $('#startPoint').val(),
+                            end: $('#endPoint').val()
+                        },
+                        success: function(response) {
+                            if (response.error) {
+                                $('#results').html(response.error);
+                                $('#panel').addClass('panel-danger');
+                                $('#status').html('Error');
+                            }
+                            else {
+                                $('#results').html(response.data);
+                                $('#panel').addClass('panel-success');
+                                $('#status').html('Success');
+                            }
+                        },
+                        dataType: 'json'
+                    });
+                }
+                else {
+                    $('#results').html('Please fill both "start" and "end" address');
+                    $('#panel').addClass('panel-danger');
+                    $('#status').html('Error');
+                }
+            })
+        })
+    </script>
+
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="row">
+                <form>
+                    <h4>Select addresses</h4>
+                    <div class="form-group">
+                        <label for="startPoint">Start Address:</label>
+                        <input type="text" class="form-control" id="startPoint" name="start" aria-describedby="start-point-span">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="endPoint">End Address:</label>
+                        <input type="text" class="form-control" id="endPoint" name="end" aria-describedby="start-point-span">
+                    </div>
+                </form>
+
+                <button type="button" class="btn btn-primary pull-right" id="calculate">Calculate</button>
+                <a href="/api/login">Login to UBER</a>
+            </div>
+
+            <div>
+                <div class="panel" id="panel" style="margin-top: 20px">
+                    <div class="panel-heading" id="status">
+                        &nbsp;
+                    </div>
+                    <div class="panel-body" id="results">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

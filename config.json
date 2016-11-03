@@ -1,0 +1,15 @@
+{
+  "uber": {
+    "clientID": "***",
+    "clientSecret": "***",
+    "serverToken": "***",
+    "appName": "***"
+  },
+  "google": {
+    "apiKey": "AIzaSyAG8DHp9tck9KWcV_-dq4zBy22tppPuYVE"
+  },
+  "app": {
+    "port": 3000
+  },
+  "discount": 0.2
+}
